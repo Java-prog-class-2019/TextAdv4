@@ -14,8 +14,20 @@ package textAdventure;
 	public static void main(String[]args) {
 		Gamemain();
 	}	
+
 	
+	//Put global variables here^^^ 
+	
+	//main game Method
 	static void Gamemain() {
+		Setup();
+		
+		while(true) {
+			
+		}
+	}
+	
+	static void Setup() {
 		
 	}
 

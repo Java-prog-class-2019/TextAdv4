@@ -1,5 +1,5 @@
 package textAdventure;
 
-public class Item {
+	class Item {
 
 }
