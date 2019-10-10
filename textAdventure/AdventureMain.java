@@ -9,8 +9,16 @@ package textAdventure;
  * create setup method and main game loop
  */
 
-public class AdventureMain {
-
+	public class AdventureMain {
 	
+	public static void main(String[]args) {
+		Gamemain();
+	}	
+	
+	static void Gamemain() {
+		
+	}
 
 }
+	
+	
