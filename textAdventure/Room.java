@@ -1,5 +1,5 @@
 package textAdventure;
 
-public class Room {
-
+class Room{
+	
 }
