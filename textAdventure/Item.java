@@ -43,11 +43,11 @@ class Item{
 		items.add(new Item("Old Bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", true, true));
 		
 
-		//DEBUG
+		/*//DEBUG
 		for(Item i: items) {
 			System.out.println(i.toString());
 			System.out.print("\n");			
-		}
+		}*/
 				
 	}
 	
