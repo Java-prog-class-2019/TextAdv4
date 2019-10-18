@@ -15,14 +15,21 @@ import java.util.*;
  * Puzzles need to be set up, etc. boolean dark (hides true descp while true), when rooms can't be accessed until x action (move bookshelf)
  */
 public class AdventureMain {
-	public static void main(String[]args) {
+	
+	public static void main(String[]args) {		
+		new AdventureMain(); //this means that we don't need to make everything static
+	}
+	
+	HashMap<String,Room> roomList = new HashMap<String, Room>();
+	Room currentRoom; 
+	ArrayList<Item> items = new ArrayList<Item>();
+	Player player;
+	//Put global variables here^^^
+	
+	AdventureMain() {
 		setUp();
-		new AdventureMain().gamemain(); //this means that we don't need to make everything static
-	}	
-	static HashMap<String,Room> roomList = new HashMap<String, Room>();
-	static Room currentRoom; 
-	static ArrayList<Item> items = new ArrayList<Item>();
-	//Put global variables here^^^ 
+		gamemain();
+	}
 
 	//main game Method
 	void gamemain() {
@@ -37,17 +44,20 @@ public class AdventureMain {
 		}
 	}
 
-	static void setUp() {
+	void setUp() {
 		Item.makeItem(items); //this will make all items and add them to the items arraylist
 		Room.setupRooms(roomList);
 		currentRoom = roomList.get("Lab1");
 		System.out.println("Intro Message");
 		System.out.println(currentRoom.toString());
+		player = new Player();
 	}
-	static String getCommand() { //gets user input
+	
+	String getCommand() { //gets user input
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Test:NSEWUD");
 		String text = sc.nextLine();
+		text  = text.trim();
 		//sc.close();
 		return text;
 	}
@@ -63,7 +73,8 @@ public class AdventureMain {
 	}
 
 	boolean parseCommand(String text) {
-		switch(text) {
+		text = text.toUpperCase();
+		switch(text) {		
 		case "N": case "S": case "W": case "E": case "U": case "D":
 			moveToRoom(text.charAt(0));
 		}

@@ -36,12 +36,14 @@ class Item{
 		return e;
 	}
 	
+	//make all items
 	static void makeItem(ArrayList<Item> items) {
 		items.add(new Item("Hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment", true, false));
 		items.add(new Item("ScrewDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", false, false));
 		items.add(new Item("Old Bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", true, true));
 		
-		
+
+		//DEBUG
 		for(Item i: items) {
 			System.out.println(i.toString());
 			System.out.print("\n");			
