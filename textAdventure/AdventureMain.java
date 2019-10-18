@@ -1,6 +1,6 @@
 package textAdventure;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /* TO DO LIST --> make into ISSUES on GitHub
  * Create object constructor for rooms (array list or hashmap?)
@@ -8,33 +8,66 @@ import java.util.ArrayList;
  * create static values for character (exmp: health, inventory size,)
  * Figure out how to track player progression and movement
  * figure out how to make a window with the Console
- * create setup method and main game loop
- */
+ * create setup method and main game loop */
 
-	public class AdventureMain {
-	
+/*To Do:
+ * Deal with invalid inputs, code only accepts capitals NSEWUD
+ * Puzzles need to be set up, etc. boolean dark (hides true descp while true), when rooms can't be accessed until x action (move bookshelf)
+ */
+public class AdventureMain {
 	public static void main(String[]args) {
+		setUp();
 		new AdventureMain().gamemain(); //this means that we don't need to make everything static
 	}	
-
-	ArrayList<Item> items = new ArrayList<Item>();
+	static HashMap<String,Room> roomList = new HashMap<String, Room>();
+	static Room currentRoom; 
+	static ArrayList<Item> items = new ArrayList<Item>();
 	//Put global variables here^^^ 
-	
+
 	//main game Method
 	void gamemain() {
-		Setup();
-		
-		
-		
-		
-		//while(true) {
-			
-		//}
+		////Instance variables
+		boolean playing = true;
+		String command = ""; 
+
+		/***** MAIN GAME LOOP *****/
+		while (playing) { 
+			command = getCommand(); 
+			playing = parseCommand(command);
+		}
 	}
-	
-	void Setup() {
+
+	static void setUp() {
 		Item.makeItem(items); //this will make all items and add them to the items arraylist
+		Room.setupRooms(roomList);
+		currentRoom = roomList.get("Lab1");
+		System.out.println("Intro Message");
+		System.out.println(currentRoom.toString());
+	}
+	static String getCommand() { //gets user input
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Test:NSEWUD");
+		String text = sc.nextLine();
+		//sc.close();
+		return text;
+	}
+
+	void moveToRoom(char c) {
+		String nextRoom;
+		nextRoom = currentRoom.getExit(c);
+
+		if (!nextRoom.equals("")) {
+			currentRoom = roomList.get(nextRoom);
+			System.out.println(currentRoom.toString());
+		}
+	}
+
+	boolean parseCommand(String text) {
+		switch(text) {
+		case "N": case "S": case "W": case "E": case "U": case "D":
+			moveToRoom(text.charAt(0));
+		}
+		return true;
 	}
 }
-	
 	
