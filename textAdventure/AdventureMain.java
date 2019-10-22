@@ -8,17 +8,18 @@ import java.util.*;
  */
 
 public class AdventureMain {
-	
+
 	public static void main(String[]args) {		
 		new AdventureMain(); //this means that we don't need to make everything static
 	}
-	
+
 	HashMap<String,Room> roomList = new HashMap<String, Room>();
 	Room currentRoom; 
 	ArrayList<Item> items = new ArrayList<Item>();
+	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
 	//Put global variables here^^^
-	
+
 	AdventureMain() {
 		setUp();
 		gamemain();
@@ -47,7 +48,7 @@ public class AdventureMain {
 		System.out.println(currentRoom.toString());
 		player = new Player();
 	}
-	
+
 	String getCommand() { //gets user input
 		Scanner sc = new Scanner(System.in);
 		System.out.println("\nPlease enter command:");
@@ -71,14 +72,13 @@ public class AdventureMain {
 			break;
 		case "EXIT":
 			return false;
-		case "SEARCH":
-			searchRoom();
-			break;
 		case "EAT":
 			eatItem();
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
+		case "SEARCH": case "PICKUP":
+			addToInv(items.get(3));
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
@@ -86,18 +86,28 @@ public class AdventureMain {
 		}
 		return true;
 	}
-	
+
 	void displayInv(){
 		for(Item i: items) {
 			System.out.println("\n"+i.toString());
 		}
 	}
-	
+	void addToInv(Item i) {
+		//Right now only adds torch item to inv, edit to change
+		invList.add(i);
+		System.out.println("You have picked up " + i.toString());
+	}
 	void moveToRoom(char c) {
 		String nextRoom;
 		nextRoom = currentRoom.getExit(c);
-
-		if (!nextRoom.equals("")) {
+		
+		//Dark room puzzle -- can't see true descp if inv does not contain torch
+		if(nextRoom.equals("MaintArea") && !invList.contains(items.get(3))) {
+			currentRoom = roomList.get(nextRoom);
+			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
+		}
+		//Standard room message
+		else if (!nextRoom.equals("")) {
 			currentRoom = roomList.get(nextRoom);
 			System.out.println(currentRoom.toString());
 		}
@@ -111,7 +121,6 @@ public class AdventureMain {
 	}
 	
 	void eatItem() {
-		
 	}
 }
-	
+

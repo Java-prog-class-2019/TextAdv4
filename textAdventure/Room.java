@@ -27,6 +27,7 @@ class Room{
 	boolean hasVisited() { return visited; }
 	void visit()   { visited = true; }
 	boolean getIsDark()  { return this.dark; }
+	static String getDarkMsg() {return darkMsg;}
 
 	public void setExits(String N, String S, String W, String E, String U, String D) {
 		this.N = N;

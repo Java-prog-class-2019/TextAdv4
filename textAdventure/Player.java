@@ -21,7 +21,7 @@ class Player {
 	//Can also do booleans to keep track of if player has object. E.g. if they 
 	//picked up hammer, hammerFg = true, and while(hammer is true) {they can do specific cmds}
 	//and when they put hammer down, hammer = false
-	ArrayList<Item> invList = new ArrayList<Item>(/*max?*/);
+	//ArrayList<Item> invList = new ArrayList<Item>(/*max?*/);
 	//Should there be a max inv size?
 	
 	
