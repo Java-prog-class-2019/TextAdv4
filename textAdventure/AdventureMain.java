@@ -78,7 +78,7 @@ public class AdventureMain {
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
 		case "SEARCH": case "PICKUP":
-			addToInv(items.get(3));
+			searchRoom();
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
@@ -88,7 +88,7 @@ public class AdventureMain {
 	}
 
 	void displayInv(){
-		for(Item i: inv) {
+		for(Item i: invList) {
 			System.out.println("\n"+i.toString());
 		}
 	}
@@ -118,11 +118,10 @@ public class AdventureMain {
 	
 	void searchRoom() {
 		for(Item i: items) {
-			if (i.location.equals(currentRoom)){
+			if (i.location.equals(currentRoom.getTitle())){
 				i.location.equals("inventory");
-			}
-			if (i.location.equals("inventory")) {
-				inv.add(i);
+				System.out.println("you found "+i );
+				invList.add(i);
 			}
 		}
 	}
