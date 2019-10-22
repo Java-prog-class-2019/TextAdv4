@@ -62,9 +62,7 @@ public class AdventureMain {
 		text = text.toUpperCase();
 		switch(text) {		
 		case "N": case "S": case "W": case "E": case "U": case "D": 
-			moveToRoom(text.charAt(0));
-			break;
-		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":  
+		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":
 			moveToRoom(text.charAt(0));
 			break;
 		case "I": case "INVENTORY": case "INV":
@@ -77,7 +75,7 @@ public class AdventureMain {
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
-		case "SEARCH": case "PICKUP":
+		case "SEARCH":
 			searchRoom();
 			break;
 		default:
@@ -92,11 +90,7 @@ public class AdventureMain {
 			System.out.println("\n"+i.toString());
 		}
 	}
-	void addToInv(Item i) {
-		//Right now only adds torch item to inv, edit to change
-		invList.add(i);
-		System.out.println("You have picked up " + i.toString());
-	}
+	
 	void moveToRoom(char c) {
 		String nextRoom;
 		nextRoom = currentRoom.getExit(c);
@@ -116,6 +110,7 @@ public class AdventureMain {
 		}
 	}
 	
+	//Adds items to inventory list
 	void searchRoom() {
 		for(Item i: items) {
 			if (i.location.equals(currentRoom.getTitle())){
