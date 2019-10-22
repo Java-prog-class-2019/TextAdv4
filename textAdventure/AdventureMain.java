@@ -88,7 +88,7 @@ public class AdventureMain {
 	}
 
 	void displayInv(){
-		for(Item i: items) {
+		for(Item i: inv) {
 			System.out.println("\n"+i.toString());
 		}
 	}
@@ -117,7 +117,14 @@ public class AdventureMain {
 	}
 	
 	void searchRoom() {
-		
+		for(Item i: items) {
+			if (i.location.equals(currentRoom)){
+				i.location.equals("inventory");
+			}
+			if (i.location.equals("inventory")) {
+				inv.add(i);
+			}
+		}
 	}
 	
 	void eatItem() {
