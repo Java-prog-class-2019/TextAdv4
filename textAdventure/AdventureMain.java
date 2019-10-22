@@ -42,7 +42,8 @@ public class AdventureMain {
 		Item.makeItem(items); //this will make all items and add them to the items arraylist
 		Room.setupRooms(roomList);
 		currentRoom = roomList.get("Lab1");
-		System.out.println("Intro Message:\nYou start here:");
+		System.out.println("You just woke up from a deep sleep. "
+				+ "\nyou have no idea where you are but you know you need to escape");
 		System.out.println(currentRoom.toString());
 		player = new Player();
 	}
@@ -59,7 +60,10 @@ public class AdventureMain {
 	boolean parseCommand(String text) {
 		text = text.toUpperCase();
 		switch(text) {		
-		case "N": case "S": case "W": case "E": case "U": case "D":  
+		case "N": case "S": case "W": case "E": case "U": case "D": 
+			moveToRoom(text.charAt(0));
+			break;
+		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":  
 			moveToRoom(text.charAt(0));
 			break;
 		case "I": case "INVENTORY": case "INV":
@@ -67,6 +71,15 @@ public class AdventureMain {
 			break;
 		case "EXIT":
 			return false;
+		case "SEARCH":
+			searchRoom();
+			break;
+		case "EAT":
+			eatItem();
+			break;
+		case "HELP":
+			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
+			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
 			break;
@@ -88,6 +101,17 @@ public class AdventureMain {
 			currentRoom = roomList.get(nextRoom);
 			System.out.println(currentRoom.toString());
 		}
+		if(nextRoom.equals("")) {
+			System.out.println("You can't go there");
+		}
+	}
+	
+	void searchRoom() {
+		
+	}
+	
+	void eatItem() {
+		
 	}
 }
 	
