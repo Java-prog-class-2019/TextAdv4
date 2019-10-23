@@ -15,11 +15,13 @@ class Room{
 	private String description;  //the description that is displayed when you first enter the room or type "look"
 	private String N,S,W,E,U,D;  //these are exits that point to the HashMap name of other rooms.
 	private boolean dark=false; //is the room dark (so you need a flashlight or else yoou die if you stay here)
+	private boolean lock=false; //checking if a room is locked and can't be accessed
 	private boolean visited=false; //has the user visited this room already?
 	ArrayList<String> items = new ArrayList<String>(); //items in this room
 
 	//Maintenance Dark Message
 	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.";
+	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in";
 
 	/******getters and setters *****/
 	String getTitle()  { return title; }
@@ -27,7 +29,9 @@ class Room{
 	boolean hasVisited() { return visited; }
 	void visit()   { visited = true; }
 	boolean getIsDark()  { return this.dark; }
+	boolean getIsLocked() { return this.lock;}
 	static String getDarkMsg() {return darkMsg;}
+	static String getLockedMsg() { return lockMsg;}
 
 	public void setExits(String N, String S, String W, String E, String U, String D) {
 		this.N = N;
@@ -62,7 +66,8 @@ class Room{
 		Room r = new Room("Airlock","A small room with large sliding doors on each end a control panel lies one one of the walls between the doors.\n "
 				+ "You notice that one of the doors won’t open without the other being closed.\n" + 
 				"");
-		r.setExits("","","Hall2","Outside","","");       
+		r.setExits("","","Hall2","Outside","",""); 
+		r.dark = true;
 		roomList.put("Airlock", r);
 
 		r = new Room("Armoury","The walls of the room are covered with shelves and cabinets housing various armaments stored within them.\n"

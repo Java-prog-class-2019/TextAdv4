@@ -101,6 +101,10 @@ public class AdventureMain {
 		}
 		
 		currentRoom = roomList.get(nextRoom);
+		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
+			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
+		}
+		
 		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
 			//Dark room puzzle -- can't see true descp if inv does not contain torch
@@ -123,8 +127,8 @@ public class AdventureMain {
 	void searchRoom() {
 		for(Item i: items) {
 			if (i.location.equals(currentRoom.getTitle())){
-				i.location.equals("inventory");
-				System.out.println("you found "+i );
+				i.location = "inventory";
+				System.out.println("you found "+i);
 				invList.add(i);
 			}
 		}
