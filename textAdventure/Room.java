@@ -127,7 +127,7 @@ class Room{
 				+"You discover that the source of the heat is a large boiler on the west wall, it seems to be operational.\n"
 				+"A small storage shelf lies on the east wall. There is a small hammer laying on top of it.");
 		r.setExits("","","","","Hall2","");
-		r.getIsDark();       
+		r.dark = true;       
 		roomList.put("MaintArea", r);
 
 		r = new Room("Med Bay", "A med bay with cabinets stocked full of different medications.\n"

@@ -101,19 +101,28 @@ public class AdventureMain {
 		String nextRoom;
 		nextRoom = currentRoom.getExit(c);
 		
-		//Dark room puzzle -- can't see true descp if inv does not contain torch
-		if(nextRoom.equals("MaintArea") && !invList.contains(items.get(3))) {
-			currentRoom = roomList.get(nextRoom);
-			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
-		}
-		//Standard room message
-		else if (!nextRoom.equals("")) {
-			currentRoom = roomList.get(nextRoom);
-			System.out.println(currentRoom.toString());
-		}
 		if(nextRoom.equals("")) {
 			System.out.println("You can't go there");
+			return;			
 		}
+		
+		currentRoom = roomList.get(nextRoom);
+		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
+			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
+			//Dark room puzzle -- can't see true descp if inv does not contain torch
+			
+		} else {
+		//Standard room message			
+			System.out.println(currentRoom.toString());
+		}
+		
+	}
+	
+	boolean searchInv( String s) {
+		for (Item item : invList) {
+			if (item.itemName.equals(s))  return true;			
+		}
+		return false;
 	}
 	
 	void searchRoom() {
