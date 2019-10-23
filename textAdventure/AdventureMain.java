@@ -18,6 +18,7 @@ public class AdventureMain {
 	ArrayList<Item> items = new ArrayList<Item>();
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
+	boolean bookshelf = true; // Secret room puzzle
 	//Put global variables here^^^
 
 	AdventureMain() {
@@ -73,6 +74,10 @@ public class AdventureMain {
 		case "EAT":
 			eatItem();
 			break;
+		case "BOOKSHELF":
+			bookshelf = false;
+			System.out.println("You have moved the bookshelf. Where it used to be, a door is now visible.");
+			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
 		case "SEARCH":
@@ -90,35 +95,40 @@ public class AdventureMain {
 			System.out.println("\n"+i.toString());
 		}
 	}
-	
+
 	void moveToRoom(char c) {
 		String nextRoom;
 		nextRoom = currentRoom.getExit(c);
-		
+
 		if(nextRoom.equals("")) {
 			System.out.println("You can't go there");
 			return;			
 		}
-		
+
 		currentRoom = roomList.get(nextRoom);
+		
+		//Dark room puzzle -- can't see true descp. if invList does not contain torch
 		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
-			//Dark room puzzle -- can't see true descp if inv does not contain torch
-			
-		} else {
-		//Standard room message			
+		}
+		//Secret room puzzle -- can't go to secret room if bookshelf blocking it hasn't been moved
+		else if (currentRoom.equals(roomList.get("Shrine")) && bookshelf){
+			System.out.println("You can't go there");
+			currentRoom = roomList.get("Lab2");
+		//Standard room message	
+		} 
+		else {
 			System.out.println(currentRoom.toString());
 		}
-		
 	}
-	
+
 	boolean searchInv( String s) {
 		for (Item item : invList) {
 			if (item.itemName.equals(s))  return true;			
 		}
 		return false;
 	}
-	
+
 	//Adds items to inventory list
 	void searchRoom() {
 		for(Item i: items) {
@@ -129,7 +139,7 @@ public class AdventureMain {
 			}
 		}
 	}
-	
+
 	void eatItem() {
 	}
 }

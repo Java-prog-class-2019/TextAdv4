@@ -4,21 +4,23 @@ import java.util.ArrayList;
 
 class Item{
 
-	boolean consumable, edible;
+	boolean consumable, edible, canRead;
 	String usedOn, desc;
 	static String itemName;
 	private int foodPoints;
 	String location;
 	
 	//constructor. It is private so items can only be made from this class. eg. makeItem().
-	private Item(String itemName, String usedOn, String desc, String location, boolean consumable, boolean edible, int foodPoints) {	
+	private Item(String itemName, String usedOn, String desc, String location, boolean consumable, boolean edible, int foodPoints, boolean canRead) {	
 		this.itemName = itemName;
 		this.usedOn = usedOn;
 		this.desc = desc;
+		//Location will be room name, not key in roomList
 		this.location = location;
 		this.consumable = consumable;
 		this.edible = edible;
 		this.foodPoints = foodPoints;
+		this.canRead = canRead;
 	}
 
 	String getUses(String u) {
@@ -39,15 +41,19 @@ class Item{
 	boolean getEdible(boolean e) {
 		return e;
 	}
+	boolean getReadable(boolean r) {
+		return r;
+	}
 
 	//make all items
 	static void makeItem(ArrayList<Item> items) {
-		items.add(new Item("Hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0));
-		items.add(new Item("ScrewDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0));
-		items.add(new Item("Old Bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0));
-		items.add(new Item("Torch", "","TEST","Lab 1" , false, false, 0));
-	
-
+		items.add(new Item("Hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0,false));
+		items.add(new Item("ScrewDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0,false));
+		items.add(new Item("Old Bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0,false));
+		items.add(new Item("Torch", "","TEST","Lab 1" , false, false, 0,false));
+		items.add(new Item("Artifact", "Yourself","TEST","Dig Site" , false, false, 0,false));
+		items.add(new Item("Helicopter Manuel", "", "A torn leaflet that seems to have useful information", "Lab 2",false, false, 0, true));
+		
 		/*//DEBUG
 		for(Item i: items) {
 			System.out.println(i.toString());
