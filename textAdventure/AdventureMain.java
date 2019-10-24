@@ -103,6 +103,7 @@ public class AdventureMain {
 		currentRoom = roomList.get(nextRoom);
 		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
+			currentRoom = roomList.get("Hall2");
 		}
 		
 		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
@@ -125,12 +126,16 @@ public class AdventureMain {
 	
 	//Adds items to inventory list
 	void searchRoom() {
-		for(Item i: items) {
-			if (i.location.equals(currentRoom.getTitle())){
-				i.location = "inventory";
-				System.out.println("you found "+i);
-				invList.add(i);
+		if(!currentRoom.getIsDark()) {
+			for(Item i: items) {
+				if (i.location.equals(currentRoom.getTitle())){
+					i.location = "inventory";
+					System.out.println("you found "+i);
+					invList.add(i);
+				} 
 			}
+		} else {
+			System.out.println("Its too dark to see anything");
 		}
 	}
 	

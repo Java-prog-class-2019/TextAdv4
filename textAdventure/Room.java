@@ -20,8 +20,8 @@ class Room{
 	ArrayList<String> items = new ArrayList<String>(); //items in this room
 
 	//Maintenance Dark Message
-	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.";
-	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in";
+	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.\n";
+	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in\n";
 
 	/******getters and setters *****/
 	String getTitle()  { return title; }
@@ -67,7 +67,7 @@ class Room{
 				+ "You notice that one of the doors won’t open without the other being closed.\n" + 
 				"");
 		r.setExits("","","Hall2","Outside","",""); 
-		r.dark = true;
+		r.lock = true;
 		roomList.put("Airlock", r);
 
 		r = new Room("Armoury","The walls of the room are covered with shelves and cabinets housing various armaments stored within them.\n"
