@@ -9,7 +9,7 @@ import java.util.ArrayList;
 class Player {
 	//IDEAS, can be changed
 	
-	int health, invSize /*temperature? */; // Health, inventory size
+	int health = 90, invSize /*temperature? */; // Health, inventory size
 	
 	 //Can move to main advMain in the parse command loop to count how many commands player has inputted.
 	int cmdCount; 
