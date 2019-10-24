@@ -118,7 +118,7 @@ class Room{
 		r = new Room("Lab 2","This laboratory seems to be in pristine condition. The counter tops are clean and neat.\n"
 				+ "However, the operation table in the middle of the room seems to be missing.\n"
 				+ "An outline of dust covers the floor where it use to be. Four bolt holes lie in the corners of the dusty outline.");
-		r.setExits("DigSite","","","","","");  
+		r.setExits("DigSite","","Shrine","","","");  
 		roomList.put("Lab2",r); 
 
 		r = new Room("Living Quarters","Rows of bunks line the far wall of this room. A bathroom door lies just off to the north.\n "

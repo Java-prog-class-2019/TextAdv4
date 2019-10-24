@@ -4,21 +4,23 @@ import java.util.ArrayList;
 
 class Item{
 
-	boolean consumable, edible;
+	boolean consumable, edible, canRead;
 	String usedOn, desc;
 	String itemName;
 	private int foodPoints;
 	String location;
 	
 	//constructor. It is private so items can only be made from this class. eg. makeItem().
-	private Item(String itemName, String usedOn, String desc, String location, boolean consumable, boolean edible, int foodPoints) {	
+	private Item(String itemName, String usedOn, String desc, String location, boolean consumable, boolean edible, int foodPoints, boolean canRead) {	
 		this.itemName = itemName;
 		this.usedOn = usedOn;
 		this.desc = desc;
+		//Location will be room name, not key in roomList
 		this.location = location;
 		this.consumable = consumable;
 		this.edible = edible;
 		this.foodPoints = foodPoints;
+		this.canRead = canRead;
 	}
 
 	String getUses(String u) {
@@ -38,6 +40,9 @@ class Item{
 
 	boolean getEdible(boolean e) {
 		return e;
+	}
+	boolean getReadable(boolean r) {
+		return r;
 	}
 
 	//make all items
