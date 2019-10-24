@@ -6,7 +6,7 @@ class Item{
 
 	boolean consumable, edible;
 	String usedOn, desc;
-	static String itemName;
+	String itemName;
 	private int foodPoints;
 	String location;
 	
@@ -42,10 +42,11 @@ class Item{
 
 	//make all items
 	static void makeItem(ArrayList<Item> items) {
+		items.add(new Item("Torch", "","TEST","Lab 1" , false, false, 0));
 		items.add(new Item("Hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0));
 		items.add(new Item("ScrewDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0));
 		items.add(new Item("Old Bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0));
-		items.add(new Item("Torch", "","TEST","Lab 1" , false, false, 0));
+		
 	
 
 		/*//DEBUG
