@@ -107,12 +107,13 @@ public class AdventureMain {
 
 		currentRoom = roomList.get(nextRoom);
 		
-		currentRoom = roomList.get(nextRoom);
+		//Airlock puzzle -- can't access airlock while you don't have keycard
 		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
 			currentRoom = roomList.get("Hall2");
 		}
 		
+		//Dark room puzzle -- can't see true description of the room while you don't have torch
 		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
 		}

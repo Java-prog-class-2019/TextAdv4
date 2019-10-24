@@ -21,7 +21,7 @@ class Room{
 
 	//Maintenance Dark Message
 	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.\n";
-	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in\n";
+	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in, so you went back to the hall.\n";
 
 	/******getters and setters *****/
 	String getTitle()  { return title; }
