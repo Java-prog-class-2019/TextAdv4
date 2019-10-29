@@ -21,6 +21,7 @@ public class AdventureMain {
 	boolean bookshelf = true; // Secret room puzzle
 	boolean playing = true;
 	boolean dead = false;
+	boolean won = false;
 	//Put global variables here^^^
 
 	AdventureMain() {
@@ -43,6 +44,7 @@ public class AdventureMain {
 				playing = false;
 				break;
 			}
+			if(won) playing = false;
 		}
 		
 		if(dead) {
@@ -105,9 +107,15 @@ public class AdventureMain {
 
 			break;
 		case "HELP":
-			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
+			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit\nEat <ItemName>\nMove<ObjectName>");
+			break;
 		case "SEARCH":
 			searchRoom();
+			break;
+		case "LEAVE":
+			System.out.println("Using your dormant power of planar manipulation you successfully travel behind the universal curtain.\n"
+					+ "you end up on a sunny beach somewhere in what looks like Hawaii. GG I guess?");
+			won = true;
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
