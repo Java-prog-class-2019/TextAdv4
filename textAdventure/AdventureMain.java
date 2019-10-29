@@ -18,6 +18,7 @@ public class AdventureMain {
 	ArrayList<Item> items = new ArrayList<Item>();
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
+	boolean bookshelf = true; // Secret room puzzle
 	//Put global variables here^^^
 
 	AdventureMain() {
@@ -60,7 +61,8 @@ public class AdventureMain {
 
 	boolean parseCommand(String text) {
 		text = text.toUpperCase();
-		switch(text) {		
+		String [] command = text.split(" ");
+		switch(command[0]) {		
 		case "N": case "S": case "W": case "E": case "U": case "D": 
 		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":
 			moveToRoom(text.charAt(0));
@@ -71,7 +73,11 @@ public class AdventureMain {
 		case "EXIT":
 			return false;
 		case "EAT":
-			eatItem();
+			eatItem(command[1]);
+			break;
+		case "BOOKSHELF":
+			bookshelf = false;
+			System.out.println("You have moved the bookshelf. Where it used to be, a door is now visible.");
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
@@ -90,47 +96,86 @@ public class AdventureMain {
 			System.out.println("\n"+i.toString());
 		}
 	}
-	
+
 	void moveToRoom(char c) {
 		String nextRoom;
 		nextRoom = currentRoom.getExit(c);
-		
+
 		if(nextRoom.equals("")) {
 			System.out.println("You can't go there");
 			return;			
 		}
-		
+
 		currentRoom = roomList.get(nextRoom);
-		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
-			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
-			//Dark room puzzle -- can't see true descp if inv does not contain torch
-			
-		} else {
-		//Standard room message			
-			System.out.println(currentRoom.toString());
+		
+		//Airlock puzzle -- can't access airlock while you don't have keycard
+		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
+			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
+			currentRoom = roomList.get("Hall2");
 		}
 		
+		//Dark room puzzle -- can't see true description of the room while you don't have torch
+		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
+			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
+		}
+		//Secret room puzzle -- can't go to secret room if bookshelf blocking it hasn't been moved
+		else if (currentRoom.equals(roomList.get("Shrine")) && bookshelf){
+			System.out.println("You can't go there");
+			currentRoom = roomList.get("Lab2");
+		//Standard room message	
+		} 
+		else {
+			System.out.println(currentRoom.toString());
+		}
 	}
-	
+
 	boolean searchInv( String s) {
 		for (Item item : invList) {
 			if (item.itemName.equals(s))  return true;			
 		}
 		return false;
 	}
-	
+
 	//Adds items to inventory list
 	void searchRoom() {
-		for(Item i: items) {
-			if (i.location.equals(currentRoom.getTitle())){
-				i.location.equals("inventory");
-				System.out.println("you found "+i );
-				invList.add(i);
+			for(Item i: items) {
+				if (i.location.equals(currentRoom.getTitle())){
+					i.location = "inventory";
+					System.out.println("you found "+i);
+					invList.add(i);
+				} 
 			}
+
+			
+	}
+
+	void eatItem(String food) {
+		
+		for(Item item: invList) {
+			if(item.itemName.equals(food.toLowerCase())){
+				if(item.edible) {
+					if(food.equals("hammer")) {
+						System.out.println("you have eaten a hammer and died, what did you expect");
+					} else {
+						if(player.health > (100 - item.foodPoints)) {
+							System.out.println("You're too full to eat");
+						} else {
+							player.health += item.foodPoints;
+							item.location = "";
+							System.out.println("you have eaten " + item.itemName + " and regained " + item.foodPoints + " health");
+						}
+					}
+				}else {
+					System.out.println("You can't eat that");
+				}
+			} else {
+				System.out.println("you don't have that");
+			}
+
+
 		}
 	}
-	
+
 	void eatItem() {
 	}
 }
-
