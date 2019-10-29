@@ -19,9 +19,6 @@ public class AdventureMain {
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
 	boolean bookshelf = true; // Secret room puzzle
-	boolean playing = true;
-	boolean dead = false;
-	boolean won = false;
 	//Put global variables here^^^
 
 	AdventureMain() {
@@ -32,25 +29,13 @@ public class AdventureMain {
 	//main game Method
 	void gamemain() {
 		////Instance variables
-		
+		boolean playing = true;
 		String command = ""; 
 
 		/***** MAIN GAME LOOP *****/
 		while (playing) { 
 			command = getCommand(); 
 			playing = parseCommand(command);
-			if(player.health<=0) {
-				dead = true;
-				playing = false;
-				break;
-			}
-			if(won) playing = false;
-		}
-		
-		if(dead) {
-			System.out.println("You have done the ded, nerd");
-		} else {
-			System.out.println("You have successfuly escaped the facility!");
 		}
 		System.out.println("Thank you for playing");
 	}
@@ -76,14 +61,7 @@ public class AdventureMain {
 
 	boolean parseCommand(String text) {
 		text = text.toUpperCase();
-		
 		String [] command = text.split(" ");
-		ArrayList<String> wordlist = new ArrayList<String>(Arrays.asList(text));		//array list of words
-		for(int i=0; i< wordlist.size(); i++) {
-			if (wordlist.get(i).equals("the")) wordlist.remove(i--);
-			if (wordlist.get(i).equals("to")) wordlist.remove(i--);
-		}
-
 		switch(command[0]) {		
 		case "N": case "S": case "W": case "E": case "U": case "D": 
 		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":
@@ -97,25 +75,17 @@ public class AdventureMain {
 		case "EAT":
 			eatItem(command[1]);
 			break;
-		case "MOVE":
-			if(command[1].equals("BOOKSHELF")) {
-				bookshelf = false;
-				System.out.println("You have moved the bookshelf. Where it used to be, a door is now visible.");
-			} else {
-				System.out.println("You can't move that");
-			}
-
+		case "DROP":
+			dropItem(command[1]);
+			break;
+		case "BOOKSHELF":
+			bookshelf = false;
+			System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
 			break;
 		case "HELP":
-			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit\nEat <ItemName>\nMove<ObjectName>");
-			break;
+			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
 		case "SEARCH":
 			searchRoom();
-			break;
-		case "LEAVE":
-			System.out.println("Using your dormant power of planar manipulation you successfully travel behind the universal curtain.\n"
-					+ "you end up on a sunny beach somewhere in what looks like Hawaii. GG I guess?");
-			won = true;
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
@@ -142,13 +112,13 @@ public class AdventureMain {
 		currentRoom = roomList.get(nextRoom);
 
 		//Airlock puzzle -- can't access airlock while you don't have keycard
-		if (currentRoom.getIsLocked() && !searchInv("keycard")) {
+		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
 			currentRoom = roomList.get("Hall2");
 		}
 
 		//Dark room puzzle -- can't see true description of the room while you don't have torch
-		if (currentRoom.getIsDark() && !searchInv("torch")) {			
+		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
 		}
 		//Secret room puzzle -- can't go to secret room if bookshelf blocking it hasn't been moved
@@ -187,21 +157,34 @@ public class AdventureMain {
 		for(Item item: invList) {
 			if(item.itemName.equals(food.toLowerCase())){
 				if(item.edible) {
-					if(player.health > (100 - item.foodPoints)) {
-						System.out.println("You're too full to eat");
+					if(food.equals("hammer")) {
+						System.out.println("you have eaten a hammer and died, what did you expect");
 					} else {
-						player.health += item.foodPoints;
-						item.location = "";
-						System.out.println("you have eaten " + item.itemName + " and regained " + item.foodPoints + " health");
-						invList.remove(item);
+						if(player.health > (100 - item.foodPoints)) {
+							System.out.println("You're too full to eat");
+						} else {
+							player.health += item.foodPoints;
+							item.location = "";
+							System.out.println("you have eaten " + item.itemName + " and regained " + item.foodPoints + " health");
+						}
 					}
+				}else {
+					System.out.println("You can't eat that");
 				}
-			}else {
-				System.out.println("You can't eat that");
+			} else {
+				System.out.println("you don't have that");
 			}
+
+
 		}
 	}
 
-	void eatItem() {
+	void dropItem(String object) {
+		for (Item item: invList) {
+			if(item.itemName.equals(object.toLowerCase())) {
+				item.location = currentRoom.getTitle();
+				System.out.println("you dropped \n" + item.itemName);
+			}
+		}
 	}
 }

@@ -47,11 +47,10 @@ class Item{
 
 	//make all items
 	static void makeItem(ArrayList<Item> items) {
-		items.add(new Item("hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","Maintenance Area" , true, true,-10000,false));
-		items.add(new Item("screwDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "Maintenance Area", false, false,0,false));
-		items.add(new Item("torch", "","TEST","Lab 1" , false, false, 0,false));
-		items.add(new Item("bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "Mess Hall", true, true,0,false));
-		items.add(new Item("keycard", "", "A small plastic card used to open certain doors around the facility", "Armoury", false, false, 0,false));
+		items.add(new Item("torch", "","TEST","Lab 1" , false, false, 0, false));
+		items.add(new Item("hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0,false));
+		items.add(new Item("screwDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0,false));
+		items.add(new Item("old bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0,false));
 		
 	
 
