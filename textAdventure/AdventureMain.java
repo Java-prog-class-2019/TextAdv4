@@ -183,7 +183,7 @@ public class AdventureMain {
 		for (Item item: invList) {
 			if(item.itemName.equals(object.toLowerCase())) {
 				item.location = currentRoom.getTitle();
-				System.out.println("you dropped \n" + item.itemName);
+				System.out.println("you dropped " + item.itemName);
 			}
 		}
 	}
