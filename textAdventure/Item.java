@@ -8,6 +8,7 @@ class Item{
 	String usedOn, desc;
 	String itemName;
 	String location;
+	int foodPoints;
 	
 	//constructor. It is private so items can only be made from this class. eg. makeItem().
 	private Item(String itemName, String usedOn, String desc, String location, boolean consumable, boolean edible, int foodPoints, boolean canRead) {	
