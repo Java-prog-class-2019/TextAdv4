@@ -75,9 +75,12 @@ public class AdventureMain {
 		case "EAT":
 			eatItem(command[1]);
 			break;
+		case "DROP":
+			dropItem(command[1]);
+			break;
 		case "BOOKSHELF":
 			bookshelf = false;
-			System.out.println("You have moved the bookshelf. Where it used to be, a door is now visible.");
+			System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
@@ -107,13 +110,13 @@ public class AdventureMain {
 		}
 
 		currentRoom = roomList.get(nextRoom);
-		
+
 		//Airlock puzzle -- can't access airlock while you don't have keycard
 		if (currentRoom.getIsLocked() && !searchInv("Keycard")) {
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getLockedMsg());
 			currentRoom = roomList.get("Hall2");
 		}
-		
+
 		//Dark room puzzle -- can't see true description of the room while you don't have torch
 		if (currentRoom.getIsDark() && !searchInv("Torch")) {			
 			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
@@ -122,7 +125,7 @@ public class AdventureMain {
 		else if (currentRoom.equals(roomList.get("Shrine")) && bookshelf){
 			System.out.println("You can't go there");
 			currentRoom = roomList.get("Lab2");
-		//Standard room message	
+			//Standard room message	
 		} 
 		else {
 			System.out.println(currentRoom.toString());
@@ -138,19 +141,19 @@ public class AdventureMain {
 
 	//Adds items to inventory list
 	void searchRoom() {
-			for(Item i: items) {
-				if (i.location.equals(currentRoom.getTitle())){
-					i.location = "inventory";
-					System.out.println("you found "+i);
-					invList.add(i);
-				} 
-			}
+		for(Item i: items) {
+			if (i.location.equals(currentRoom.getTitle())){
+				i.location = "inventory";
+				System.out.println("you found "+i);
+				invList.add(i);
+			} 
+		}
 
-			
+
 	}
 
 	void eatItem(String food) {
-		
+
 		for(Item item: invList) {
 			if(item.itemName.equals(food.toLowerCase())){
 				if(item.edible) {
@@ -176,6 +179,12 @@ public class AdventureMain {
 		}
 	}
 
-	void eatItem() {
+	void dropItem(String object) {
+		for (Item item: invList) {
+			if(item.itemName.equals(object.toLowerCase())) {
+				item.location = currentRoom.getTitle();
+				System.out.println("you dropped \n" + item.itemName);
+			}
+		}
 	}
 }
