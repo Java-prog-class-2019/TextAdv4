@@ -48,12 +48,15 @@ class Item{
 	//make all items
 	static void makeItem(ArrayList<Item> items) {
 		items.add(new Item("torch", "","TEST","Lab 1" , false, false, 0, false));
-		items.add(new Item("hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0,false));
-		items.add(new Item("screwDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0,false));
-		items.add(new Item("old bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0,false));
-		
-	
-
+		items.add(new Item("hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","Maintenance Area" , true, false,0,false));
+		items.add(new Item("screwDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "Maintenance Area", false, false,0,false));
+		items.add(new Item("bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "Mess Hall", true, true,0,false));
+		items.add(new Item("keycard","","A small plastic card that can be used to open certain doors in the facility", "Armoury", false,false, 0, false));
+		items.add(new Item("kerosene","Helicopter","Using the research facility's equipment, you collected crude oil and distilled it into kerosene", "Dig Site", false, false, 0, false));
+		items.add(new Item("flamethrower","Helicopter","A worn, but still functioning flamethrower. It seems that it can add heat to melt something", "Armoury", false,false, 0, false));
+		items.add(new Item("artifact","Helicopter","An mysterious looking artifact. While it is in your possession, you feel yourself getting weaker", "Secret Room", false,false, 0, false));
+		items.add(new Item("researchpaper","","You found a research paper. It seems as if the scientists were looking to extract oil from the dig site. Perhaps you could read it", "Lab 2", false,false, 0, true));
+		items.add(new Item("newspaperClipping","","", "Armoury", false,false, 0, true));
 		/*//DEBUG
 		for(Item i: items) {
 			System.out.println(i.toString());
