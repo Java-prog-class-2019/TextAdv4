@@ -83,9 +83,8 @@ class Room{
 		r = new Room("Dig Site","This temporary work site seems to be inside of a dug out cave made from ice.\n "
 				+ "In the center of the cavern lies a plinth made from a smooth, dark stone.\n "
 				+ "On top of the plinth lies a small dagger. Something is engraved in the side of the blade,\n "
-				+ "but it’s in a language you can’t understand. Underneath the dagger you find a note.\n" + 
-				"\n" + 
-				"The note reads: It has awoken from its sleep. The beast must slumber again.\n" + "");
+				+ "but it’s in a language you can’t understand. Underneath the dagger you find a note.\n" 
+				+ "On the side, you also notice some research equipment. It seems to be an oil distillation site");
 		r.cold = true;
 		r.setExits("Outside","Lab2","","","","");
 		roomList.put("DigSite", r);

@@ -2,11 +2,6 @@ package textAdventure;
 
 import java.util.*;
 
-/*To Do:
- * Deal with invalid inputs, code only accepts capitals NSEWUD
- * Puzzles need to be set up, etc. boolean dark (hides true descp while true), when rooms can't be accessed until x action (move bookshelf)
- */
-
 public class AdventureMain {
 
 	public static void main(String[]args) {		
@@ -20,14 +15,13 @@ public class AdventureMain {
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
 	String word1, word2, word3;
-	boolean safe;
 	boolean bookshelf = true; // Secret room puzzle
 	boolean boardedUp = true; //Living Quarters puzzle
 	boolean wearingCoat = false; //Jacket puzzle - must be wearing jacket to go outside
 	boolean frozenPipes = true,artifactInPlace = false, needFuel = true; // Helicopter puzzle
 	boolean won = false, dead = false; // win/lose conditions
 	//Put global variables here^^^
-	
+
 	AdventureMain() {
 		setUp();
 		gamemain();
@@ -57,22 +51,20 @@ public class AdventureMain {
 		System.out.println("Thank you for playing");
 	}
 
-	
-
 	void setUp() {
 		Item.makeItem(items); //this will make all items and add them to the items arraylist
 		Room.setupRooms(roomList);
 		currentRoom = roomList.get("Lab1");
-		System.out.println("You just woke up from a deep sleep. "
-				+ "\nyou have no idea where you are but you know you need to escape\n"
-				+ "you can use help to get started\n");
+		System.out.println("You just woke up from a deep sleep.\n"
+				+ "you have no idea where you are but you know you need to escape\n"
+				+ "you can use help to get started\n\n"
+				+"You are in:");
 		System.out.println(currentRoom.toString());
 		player = new Player();
 	}
 
 	String getCommand() { //gets user input
-		Scanner sc = new Scanner(System.in);
-		System.out.println("\nPlease enter a command:");
+		System.out.println("Please enter a command:");
 		String text = sc.nextLine();
 		text  = text.trim();
 		return text;
@@ -104,7 +96,7 @@ public class AdventureMain {
 			System.out.print("Do you really want to quit the game? ");
 			String ans = getCommand().toUpperCase();
 			if (ans.equals("YES") || ans.equals("Y")) {
-				System.out.print("Bye. ");
+				System.out.print("Bye.");
 				return false;
 			}
 		case "EAT":
@@ -121,7 +113,6 @@ public class AdventureMain {
 				bookshelf = false;
 				System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
 			}
-
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
@@ -141,30 +132,27 @@ public class AdventureMain {
 						System.out.println("You have melted the frozen pipes");
 					}
 				}
-				
-
 				if(word2.equals("ARTIFACT")) {
 					if (searchInv("artifact")){
 						artifactInPlace = true;
 						System.out.println("The artifact fit perfectly inside the gap of the instrument panel");	
 					}
 				}
-
+				if(word2.equals("HAMMER")) {
+					if(searchInv("hammer")) {
+						boardedUp = false;
+						System.out.println("You used the hammer to take down the wood");
+					}
+					else System.out.println("You don't have the required supplies");
+				}
+				if(word2.equals("KEROSENE")){
+					if(searchInv("kerosene")) {
+						needFuel = false;
+						System.out.println("You have put fuel in the engine");
+					}
+					else System.out.println("You don't have fuel");
+				}
 			}
-			break;
-		case "HAMMER":
-			if(searchInv("hammer")) {
-				boardedUp = false;
-				System.out.println("You used the hammer to take down the wood");
-			}
-			else System.out.println("You don't have the required supplies");
-			break;
-		case "KEROSENE":
-			if(searchInv("kerosene")) {
-				needFuel = false;
-				System.out.println("You have put fuel in the engine");
-			}
-			else System.out.println("You don't have fuel");
 			break;
 		case "LEAVE":
 			System.out.println("You awaken your dormant powers of temporal manipulation to travel behind the universal curtain to escape.\n"
@@ -172,6 +160,20 @@ public class AdventureMain {
 					+ "GG I guess?\n");
 			won = true;
 			break;
+			//Use this for testing puzzles while wear and use cannot work
+			/*	case "HAMMER":
+				if(searchInv("hammer")) {
+					boardedUp = false;
+					System.out.println("You used the hammer to take down the wood");
+				}
+				else System.out.println("You don't have the required supplies");
+			break;
+		case "JACKET":
+			if(searchInv("jacket")) {
+				wearingCoat = true;
+				System.out.println("You are now wearing the coat");
+			}
+		break; */
 		default:
 			System.out.println("Sorry, I don't recognize this command");
 			break;
@@ -194,6 +196,8 @@ public class AdventureMain {
 		}
 
 		Room nextRoom = roomList.get(nextRoomName);
+
+		//All puzzles where you cannot access the next room
 
 		//Airlock puzzle -- can't access airlock while you don't have keycard
 		if (nextRoom.getIsLocked() && !searchInv("keycard")) {
@@ -218,34 +222,29 @@ public class AdventureMain {
 			System.out.println("You can't go there");
 			return;
 		} 
-		//cold puzzle -- take damage if room is cold and player doesn't have jacket
-		if (currentRoom.getIsCold() && !safe) {
-			System.out.println(Room.getcoldMsg());
-			player.health -= 50;
-		}
-		else {
-			System.out.println(currentRoom.toString());
 
-		//All checks/puzzles passed and you can move to the next room
 		currentRoom = roomList.get(nextRoomName);
+
+		//All puzzles taking effect in the room
 
 		//Dark room puzzle -- can't see true description of the room while you don't have torch
 		if (currentRoom.getIsDark() && !searchInv("torch")) {			
-			System.out.println(currentRoom.getTitle() + "\n" + Room.getDarkMsg());
+			System.out.println("You are now in\n"+currentRoom.getTitle() + "\n" + Room.getDarkMsg());
 			return;
 		}
+
+		//Cold puzzle -- take damage if room is cold and player doesn't have jacket
+		if (currentRoom.getIsCold() && !wearingCoat) {
+			System.out.println(Room.getcoldMsg());
+			player.health -= 50;
+		}
+
 		//Standard room message	
-		else System.out.println(currentRoom.toString());
-
-
+		System.out.println("You are now in:\n"+currentRoom.toString());
 	}
 
 	boolean searchInv( String s) {
-		System.out.println("Your Inventory");
 		for (Item item : invList) {
-			if (item.itemName.equals("worn jacket")) {
-				safe = true;
-			}
 			if (item.itemName.equals(s))  return true;			
 		}
 		return false;
@@ -253,6 +252,7 @@ public class AdventureMain {
 
 	//Adds items to inventory list
 	void searchRoom() {
+		//Dark room puzzle -- cannot search in a dark room
 		if (!searchInv("torch") && currentRoom.equals(roomList.get("MaintArea"))) {
 			System.out.println("It is too dark to search");
 		}
@@ -266,12 +266,13 @@ public class AdventureMain {
 			}
 		}
 	}
-	
+
 	void wearItem(String item) {
-		if (searchInv("coat")) 
+		if (searchInv("jacket")) 
 			wearingCoat = true;
 		else System.out.println("You don't have this item");
 	}
+
 	void eatItem(String food) {
 		for(Item item: invList) {
 			if(item.itemName.equals(food.toLowerCase())){
@@ -303,6 +304,9 @@ public class AdventureMain {
 					if(text.equals("researchpaper")) {
 						System.out.println("research paper text");
 					} 
+					if(text.equals("note")) {
+						System.out.println("The note reads: It has awoken from its sleep. The beast must slumber again.");
+					} 
 					else if (text.equals("artifact")) {
 						System.out.println("Your head hurts simply just trying to understand the mysterious language.");
 					}
@@ -328,11 +332,11 @@ public class AdventureMain {
 		if (frozenPipes) System.out.println("The helicopter's pipes are frozen. Perhaps you could melt it");
 		if (needFuel) System.out.println("The engine needs fuel");
 		if (!artifactInPlace) System.out.println("There is a gap inside the instrument panel. The missing piece seems instrumental to the functioning of the helicopter");
-		if (searchInv("kerosene") && !frozenPipes && artifactInPlace) System.out.println("Everything seems to be in order, perhaps you could try operating the helicopter");
+		if (!needFuel && !frozenPipes && artifactInPlace) System.out.println("Everything seems to be in order, perhaps you could try operating the helicopter");
 	}
 
 	void leave() {
-		if (searchInv("kerosene") && !frozenPipes && artifactInPlace) {
+		if (!needFuel && !frozenPipes && artifactInPlace) {
 			System.out.println("Using your dormant power of planar manipulation, you successfully travel behind the universal curtain.\n"
 					+"You successfully end up on a sunny beach somewhere in what looks like Hawaii");
 			won = true;
