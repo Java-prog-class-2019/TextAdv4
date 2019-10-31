@@ -96,12 +96,17 @@ public class AdventureMain {
 			displayInv();
 			break;
 		case "EXIT":
-			return false;
+			System.out.print("Do you really want to quit the game? ");
+			String ans = getCommand().toUpperCase();
+			if (ans.equals("YES") || ans.equals("Y")) {
+				System.out.print("Bye. ");
+				return false;
+			}
 		case "EAT":
 			eatItem(word2);
 			break;
 		case "READ":
-			readItem(command[1]);
+			readItem(word2);
 			break;
 		case "DROP":
 			dropItem(word2);
@@ -111,7 +116,7 @@ public class AdventureMain {
 				bookshelf = false;
 				System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
 			}
-			
+
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
@@ -123,16 +128,30 @@ public class AdventureMain {
 			if (currentRoom.equals(roomList.get("Helipad"))) heliPuzzle();
 			else System.out.println("You're not in the right area");
 			break;
-		case "FLAMETHROWER":
-			frozenPipes = false;
-			System.out.println("You have melted the frozen pipes");
-			break;
-		case "ARTIFACT":
-			artifactInPlace = true;
-			System.out.println("The artifact fit perfectly inside the gap of the instrument panel");
+		case "USE":
+			if(currentRoom.equals(roomList.get("Helipad"))) {
+				if(word2.equals("FLAMETHROWER")) {
+					if (searchInv("flamethrower")){
+						frozenPipes = false;
+						System.out.println("You have melted the frozen pipes");
+					}
+				}
+				
+
+				if(word2.equals("ARTIFACT")) {
+					if (searchInv("artifact")){
+						artifactInPlace = true;
+						System.out.println("The artifact fit perfectly inside the gap of the instrument panel");	
+					}
+				}
+
+			}
 			break;
 		case "LEAVE":
-			leave();
+			System.out.println("You awaken your dormant powers of temporal manipulation to travel behind the universal curtain to escape.\n"
+					+ "you end up on some beach in what looks like Hawaii.\n"
+					+ "GG I guess?\n");
+			won = true;
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
@@ -243,7 +262,7 @@ public class AdventureMain {
 			}
 		}
 	}
-	
+
 	void dropItem(String object) {
 		for (Item item: invList) {
 			if(item.itemName.equals(object.toLowerCase())) {
@@ -252,19 +271,19 @@ public class AdventureMain {
 			}
 		}
 	}
-	
+
 	void heliPuzzle() {
 		if (frozenPipes) System.out.println("The helicopter's pipes are frozen. Perhaps you could melt it");
 		if (!searchInv("kerosene")) System.out.println("The engine needs fuel");
 		if (!artifactInPlace) System.out.println("There is a gap inside the instrument panel. The missing piece seems instrumental to the functioning of the helicopter");
 		if (searchInv("kerosene") && !frozenPipes && artifactInPlace) System.out.println("Everything seems to be in order, perhaps you could try operating the helicopter");
 	}
-	
+
 	void leave() {
 		if (searchInv("kerosene") && !frozenPipes && artifactInPlace) {
-		System.out.println("Using your dormant power of planar manipulation, you successfully travel behind the universal curtain.\n"
-				+"You successfully end up on a sunny beach somewhere in what looks like Hawaii");
-		won = true;
+			System.out.println("Using your dormant power of planar manipulation, you successfully travel behind the universal curtain.\n"
+					+"You successfully end up on a sunny beach somewhere in what looks like Hawaii");
+			won = true;
 		}
 		else System.out.println("You tried to start the helicopter, but it does not function. Perhaps you're still missing a few pieces");
 	}

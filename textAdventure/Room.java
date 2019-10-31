@@ -112,13 +112,13 @@ class Room{
 		r = new Room("Lab 1","A dimly lit room, it feels cold and damp almost like somethings breathing down the back of your neck.\n"
 				+ "Large scratches are carved into the metal walls near the door.\n"
 				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against a wall");
-		r.setExits("","","","Hall1","","");  
+		r.setExits("Shrine","","","Hall1","","");  
 		roomList.put("Lab1",r); 
 
 		r = new Room("Lab 2","This laboratory seems to be in pristine condition. The counter tops are clean and neat.\n"
 				+ "However, the operation table in the middle of the room seems to be missing.\n"
 				+ "An outline of dust covers the floor where it use to be. Four bolt holes lie in the corners of the dusty outline.");
-		r.setExits("DigSite","","Shrine","","","");  
+		r.setExits("DigSite","","","","","");  
 		roomList.put("Lab2",r); 
 
 		r = new Room("Living Quarters","Rows of bunks line the far wall of this room. A bathroom door lies just off to the north.\n "
@@ -160,7 +160,7 @@ class Room{
 		r = new Room("Secret Room", "This room was hidden behind a bookshelf. It seems to be some\n"
 				+"sort of altar room lit only by candles. Symbols made from a dark liquid cover the floor.\n"
 				+"The room is too dark to see what the liquid is.");
-		r.setExits("","","","Lab2","","");
+		r.setExits("","Lab1","","","","");
 		roomList.put("Shrine", r);
 
 		/*//Prints all rooms 
