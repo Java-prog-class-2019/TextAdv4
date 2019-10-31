@@ -20,11 +20,12 @@ public class AdventureMain {
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
 	String word1, word2, word3;
+	boolean safe;
 	boolean bookshelf = true; // Secret room puzzle
 	boolean frozenPipes = true,artifactInPlace = false; // Helicopter puzzle
 	boolean won = false, dead = false; // win/lose conditions
 	//Put global variables here^^^
-
+	
 	AdventureMain() {
 		setUp();
 		gamemain();
@@ -53,6 +54,8 @@ public class AdventureMain {
 		sc.close();
 		System.out.println("Thank you for playing");
 	}
+
+	
 
 	void setUp() {
 		Item.makeItem(items); //this will make all items and add them to the items arraylist
@@ -193,6 +196,11 @@ public class AdventureMain {
 			currentRoom = roomList.get("Lab2");
 			//Standard room message	
 		} 
+		//cold puzzle -- take damage if room is cold and player doesn't have jacket
+		if (currentRoom.getIsCold() && !safe) {
+			System.out.println(Room.getcoldMsg());
+			player.health -= 50;
+		}
 		else {
 			System.out.println(currentRoom.toString());
 		}
@@ -201,6 +209,9 @@ public class AdventureMain {
 	boolean searchInv( String s) {
 		System.out.println("Your Inventory");
 		for (Item item : invList) {
+			if (item.itemName.equals("worn jacket")) {
+				safe = true;
+			}
 			if (item.itemName.equals(s))  return true;			
 		}
 		return false;

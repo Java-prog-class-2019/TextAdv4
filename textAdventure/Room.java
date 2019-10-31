@@ -16,13 +16,15 @@ class Room{
 	private String N,S,W,E,U,D;  //these are exits that point to the HashMap name of other rooms.
 	private boolean dark=false; //is the room dark (so you need a flashlight or else yoou die if you stay here)
 	private boolean lock=false; //checking if a room is locked and can't be accessed
+	private boolean cold=false; //check to see if the room is cold enough to freeze in
 	private boolean visited=false; //has the user visited this room already?
 	ArrayList<String> items = new ArrayList<String>(); //items in this room
 
 	//Maintenance Dark Message
 	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.\n";
 	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in, so you went back to the hall.\n";
-
+	static String coldMsg = "It's freezing out here, if you don't leave soon you could freeze to death\n";
+	
 	/******getters and setters *****/
 	String getTitle()  { return title; }
 	String getDesc()  { return description; }
@@ -30,8 +32,11 @@ class Room{
 	void visit()   { visited = true; }
 	boolean getIsDark()  { return this.dark; }
 	boolean getIsLocked() { return this.lock;}
+	boolean getIsCold() { return this.cold; }
+	
 	static String getDarkMsg() {return darkMsg;}
 	static String getLockedMsg() { return lockMsg;}
+	static String getcoldMsg() {return coldMsg;}
 
 	public void setExits(String N, String S, String W, String E, String U, String D) {
 		this.N = N;
@@ -80,8 +85,8 @@ class Room{
 				+ "On top of the plinth lies a small dagger. Something is engraved in the side of the blade,\n "
 				+ "but it’s in a language you can’t understand. Underneath the dagger you find a note.\n" + 
 				"\n" + 
-				"The note reads: It has awoken from its sleep. The beast must slumber again.\n" + 
-				"");
+				"The note reads: It has awoken from its sleep. The beast must slumber again.\n" + "");
+		r.cold = true;
 		r.setExits("Outside","Lab2","","","","");
 		roomList.put("DigSite", r);
 
@@ -99,6 +104,7 @@ class Room{
 		r = new Room("Helicopter Pad","A large concrete circle rests in the snow with a helicopter sitting on top.\n"
 				+ "The helicopter seems to be functional but you try to turn it on and it doesn’t start up.\n"
 				+"It looks like its out of fuel. Maybe you could escape if you found some.");
+		r.cold = true;
 		r.setExits("","Outside","","","","");  
 		roomList.put("Helipad",r);
 
@@ -152,8 +158,8 @@ class Room{
 
 		r = new Room("Outside","Its cold, very cold. You are surrounded by cliffs of ice capped with snow.\n "
 				+ "You can see a helipad off to the north.\n "
-				+ "Off to your east you can see what seems to be a large cavern carved out from the ice.\n" + 
-				"");
+				+ "Off to your east you can see what seems to be a large cavern carved out from the ice.\n" + "");
+		r.cold = true;
 		r.setExits("Helipad","DigSite","Airlock","","","");  
 		roomList.put("Outside",r);
 
