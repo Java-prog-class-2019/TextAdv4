@@ -18,6 +18,7 @@ public class AdventureMain {
 	ArrayList<Item> items = new ArrayList<Item>();
 	ArrayList<Item> invList = new ArrayList<Item>();
 	Player player;
+	String word1, word2, word3;
 	boolean bookshelf = true; // Secret room puzzle
 	//Put global variables here^^^
 
@@ -45,14 +46,15 @@ public class AdventureMain {
 		Room.setupRooms(roomList);
 		currentRoom = roomList.get("Lab1");
 		System.out.println("You just woke up from a deep sleep. "
-				+ "\nyou have no idea where you are but you know you need to escape");
+				+ "\nyou have no idea where you are but you know you need to escape\n"
+				+ "you can use help to get started\n");
 		System.out.println(currentRoom.toString());
 		player = new Player();
 	}
 
 	String getCommand() { //gets user input
 		Scanner sc = new Scanner(System.in);
-		System.out.println("\nPlease enter command:");
+		System.out.println("\nPlease enter a command:");
 		String text = sc.nextLine();
 		text  = text.trim();
 		//sc.close();
@@ -60,9 +62,20 @@ public class AdventureMain {
 	}
 
 	boolean parseCommand(String text) {
+		text = text.toLowerCase().trim();	
 		text = text.toUpperCase();
-		String [] command = text.split(" ");
-		switch(command[0]) {		
+		String words[] = text.split(" ");
+		ArrayList<String> wordlist = new ArrayList<String>(Arrays.asList(words));		//array list of words
+		for(int i=0; i< wordlist.size(); i++) {
+			if (wordlist.get(i).equals("THE")) wordlist.remove(i--);
+			if (wordlist.get(i).equals("TO")) wordlist.remove(i--);	
+		}
+		word1 = wordlist.get(0);
+		if(wordlist.size() >= 2) {
+			word2 = wordlist.get(1);
+		}
+
+		switch(word1) {		
 		case "N": case "S": case "W": case "E": case "U": case "D": 
 		case "NORTH": case "SOUTH": case "WEST": case "EAST": case "UP": case "DOWN":
 			moveToRoom(text.charAt(0));
@@ -73,17 +86,21 @@ public class AdventureMain {
 		case "EXIT":
 			return false;
 		case "EAT":
-			eatItem(command[1]);
+			eatItem(word2);
 			break;
 		case "DROP":
-			dropItem(command[1]);
+			dropItem(word2);
 			break;
-		case "BOOKSHELF":
-			bookshelf = false;
-			System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
+		case "MOVE":
+			if(word2.equals("BOOKSHELF")) {
+				bookshelf = false;
+				System.out.println("You have moved the bookshelf. From where it used to be, a door is now visible.");
+			}
+			
 			break;
 		case "HELP":
 			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nEat\nSearch\nInventory\nExit");
+			break;
 		case "SEARCH":
 			searchRoom();
 			break;
@@ -133,6 +150,7 @@ public class AdventureMain {
 	}
 
 	boolean searchInv( String s) {
+		System.out.println("Your Inventory");
 		for (Item item : invList) {
 			if (item.itemName.equals(s))  return true;			
 		}
@@ -148,8 +166,6 @@ public class AdventureMain {
 				invList.add(i);
 			} 
 		}
-
-
 	}
 
 	void eatItem(String food) {
@@ -171,11 +187,7 @@ public class AdventureMain {
 				}else {
 					System.out.println("You can't eat that");
 				}
-			} else {
-				System.out.println("you don't have that");
-			}
-
-
+			} 
 		}
 	}
 
