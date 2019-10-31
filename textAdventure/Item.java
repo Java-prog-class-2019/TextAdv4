@@ -60,13 +60,7 @@ class Item{
 		items.add(new Item("newspaperclipping","", "Armoury", false,false, 0, true));
 =======
 		items.add(new Item("torch", "","TEST","Lab 1" , false, false, 0, false));
-		items.add(new Item("hammer", "Boards", "A small, worn hammer that looks like it could fall apart at any moment","MaintArea" , true, false,0,false));
-		items.add(new Item("screwDriver", "Screws", "A regular flathead screwdriver, it looks pretty worn", "MaintArea", false, false,0,false));
-		items.add(new Item("old bread","Yourself","A stale piece of bread that as far as you can tell isn't mouldy, yet", "MessHall", true, true,0,false));
 		items.add(new Item("worn jacket","Yourself","and old wethered jacket that seems a little worse for ware but keeps you warm when you wear it","Living Quarters", false, false,0, false));
-	
-
->>>>>>> Stashed changes
 		/*//DEBUG
 		for(Item i: items) {
 			System.out.println(i.toString());
