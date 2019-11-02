@@ -211,12 +211,6 @@ public class AdventureMain {
 			return;
 		}
 
-		//Outside puzzle -- can't access airlock while you don't have keycard
-		if (nextRoom.equals(roomList.get("Outside")) && !wearingCoat) {
-			System.out.println("It is too cold to go outside without a coat.");
-			return;
-		}
-
 		//Secret room puzzle -- can't go to secret room if bookshelf blocking it hasn't been moved
 		if (nextRoom.equals(roomList.get("Shrine")) && bookshelf){
 			System.out.println("You can't go there");
@@ -235,8 +229,9 @@ public class AdventureMain {
 
 		//Cold puzzle -- take damage if room is cold and player doesn't have jacket
 		if (currentRoom.getIsCold() && !wearingCoat) {
-			System.out.println(Room.getcoldMsg());
-			player.health -= 50;
+			System.out.println("Brr... " + Room.getcoldMsg());
+			player.health -= 30;
+			System.out.println("you take 30 damage");
 		}
 
 		//Standard room message	
@@ -245,7 +240,10 @@ public class AdventureMain {
 
 	boolean searchInv( String s) {
 		for (Item item : invList) {
-			if (item.itemName.equals(s))  return true;			
+			if (item.itemName.equals(s))  return true;
+			if (item.itemName.equals("jacket")) {
+				wearingCoat = true;
+			}
 		}
 		return false;
 	}
@@ -267,11 +265,7 @@ public class AdventureMain {
 		}
 	}
 
-	void wearItem(String item) {
-		if (searchInv("jacket")) 
-			wearingCoat = true;
-		else System.out.println("You don't have this item");
-	}
+	
 
 	void eatItem(String food) {
 		for(Item item: invList) {
