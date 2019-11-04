@@ -54,7 +54,7 @@ class Item{
 		items.add(new Item("kerosene","Using the research facility's equipment, you collected crude oil and distilled it into kerosene", "Dig Site", false, 0, false));
 		items.add(new Item("flamethrower","A worn, but still functioning flamethrower. It seems that it can add heat to melt something", "Armoury",false, 0, false));
 		items.add(new Item("artifact","An mysterious looking artifact. While it is in your possession, you feel yourself getting weaker", "Secret Room",false, 0, true));
-		items.add(new Item("researchpaper","You found a research paper. It seems as if the scientists were looking to extract oil from the dig site. Perhaps you could read it", "Lab 2",false, 0, true));
+		items.add(new Item("researchpaper","You found a research paper. It seems as if the scientists were looking to extract oil from the dig site. Perhaps you could read it", "Lab 1",false, 0, true));
 		items.add(new Item("jacket","An old wethered jacket that seems a little worse for ware but keeps you warm when you wear it","Living Quarters", false,0, false));
 		items.add(new Item("note","There seems to be some writing on it","Dig Site",false,0,true));
 		
