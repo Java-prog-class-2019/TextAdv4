@@ -20,7 +20,7 @@ class Room{
 	private boolean visited=false; //has the user visited this room already?
 	ArrayList<String> items = new ArrayList<String>(); //items in this room
 
-	//Maintenance Dark Message
+	//Puzzle messages
 	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.\n";
 	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in, so you went back to the hall.\n";
 	static String coldMsg = "It's freezing out here, if you don't leave soon you could freeze to death\n";
@@ -67,7 +67,9 @@ class Room{
 	}
 
 	static void setupRooms(HashMap<String,Room> roomList) {
-
+		//Sets up all rooms with their name, description, and connecting rooms
+		// N S W E U D << exit sequence
+		
 		Room r = new Room("Airlock","A small room with large sliding doors on each end a control panel lies one one of the walls between the doors.\n "
 				+ "You notice that one of the doors won’t open without the other being closed.\n" + 
 				"");
@@ -113,7 +115,7 @@ class Room{
 				+"A single knife is imbedded halfway into the wall and a strang black liquid seems to be seeping out around");
 		r.setExits("","","","MessHall","","");   
 		roomList.put("Kitchen", r);
-		// N S W E U D << exit sequence
+		
 		r = new Room("Lab 1","A dimly lit room, it feels cold and damp almost like somethings breathing down the back of your neck.\n"
 				+ "Large scratches are carved into the metal walls near the door.\n"
 				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against a wall");
