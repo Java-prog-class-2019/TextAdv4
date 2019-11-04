@@ -52,6 +52,12 @@ public class AdventureMain {
 				System.out.println("You have successfully escaped the facility");
 				playing = false;
 			}
+			
+			for (Item item : invList) {
+				if (item.itemName.equals("jacket")) {
+					wearingCoat = true;
+				}
+			}
 		}
 		sc.close();
 		System.out.println("Thank you for playing");
