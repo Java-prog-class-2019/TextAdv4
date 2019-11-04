@@ -35,18 +35,18 @@ public class AdventureMain {
 
 		/***** MAIN GAME LOOP *****/
 		while (playing) { 
-			
+
 			//Reads user input
 			command = getCommand(); 
 			playing = parseCommand(command);
-			
+
 			//Player death
 			if (player.health <= 0) {
 				dead = true;
 				System.out.println("You have died");
 				playing = false;
 			}
-			
+
 			//Player win
 			if (won) {
 				System.out.println("You have successfully escaped the facility");
@@ -158,20 +158,14 @@ public class AdventureMain {
 			}
 			else if(currentRoom.equals(roomList.get("Hall2"))){
 				if(word2.equals("HAMMER")) {
-				if(searchInv("hammer")) {
-					boardedUp = false;
-					System.out.println("You used the hammer to take down the wood");
-				}
-				else System.out.println("You don't have the required supplies");
+					if(searchInv("hammer")) {
+						boardedUp = false;
+						System.out.println("You used the hammer to take down the wood");
+					}
+					else System.out.println("You don't have the required supplies");
 				}
 			}
 			else System.out.println("You're not in the right area or cannot use those items in that way");
-			break;
-		case "LEAVE":
-			System.out.println("You awaken your dormant powers of temporal manipulation to travel behind the universal curtain to escape.\n"
-					+ "you end up on some beach in what looks like Hawaii.\n"
-					+ "GG I guess?\n");
-			won = true;
 			break;
 		default:
 			System.out.println("Sorry, I don't recognize this command");
@@ -267,33 +261,32 @@ public class AdventureMain {
 		}
 	}
 
-	
+
 
 	void eatItem(String food) {
-<<<<<<< Updated upstream
-		//Eat command
-=======
 		food = food.toLowerCase();
->>>>>>> Stashed changes
 		for(Item item: invList) {
 			if(item.itemName.equals(food)){
 				if(item.edible) {
 					if(food.equals("hammer")) {
 						System.out.println("you have eaten a hammer and died, what did you expect");
+						player.health = 0;
+						
 					} else {
 						if(player.health > (100 - item.foodPoints)) {
 							System.out.println("You're too full to eat");
+							
 						} else {
 							player.health += item.foodPoints;
 							item.location = "";
 							System.out.println("you have eaten " + item.itemName + " and regained " + item.foodPoints + " health");
+							
 						}
 					}
 				}else {
 					System.out.println("You can't eat that");
+					
 				}
-			} else {
-				System.out.println("you don't have that");
 			}
 		}
 	}
@@ -306,8 +299,8 @@ public class AdventureMain {
 				if(item.canRead) {
 					if(itemRead.equals("researchpaper")) {
 						System.out.println("From the paper, you summarize that the researchers had been testing with oil distillation\n"
-								  +"The oil extraction and distillation site, located at the Dig Site, had been used for multiple purposes."
-								  +"For example, allowing the researchers to produce their own fuel among various other purposes");
+								+"The oil extraction and distillation site, located at the Dig Site, had been used for multiple purposes."
+								+"For example, allowing the researchers to produce their own fuel among various other purposes");
 					} 
 					if(itemRead.equals("note")) {
 						System.out.println("The note reads: It has awoken from its sleep. The beast must slumber again.");
@@ -339,16 +332,12 @@ public class AdventureMain {
 		if (frozenPipes) System.out.println("The helicopter's pipes are frozen. Perhaps you could melt it");
 		if (needFuel) System.out.println("The engine needs fuel");
 		if (!artifactInPlace) System.out.println("There is a gap inside the instrument panel. The missing piece seems instrumental to the functioning of the helicopter");
-		if (!needFuel && !frozenPipes && artifactInPlace) System.out.println("Everything seems to be in order, perhaps you could try operating the helicopter");
-	}
-
-	void leave() {
-		//Allows player to leave if they have completed all helicopter sub-puzzles
 		if (!needFuel && !frozenPipes && artifactInPlace) {
-			System.out.println("Using your dormant power of planar manipulation, you successfully travel behind the universal curtain.\n"
-					+"You successfully end up on a sunny beach somewhere in what looks like Hawaii");
+			System.out.println("The rotor of the helicopter starts to speed up. you slowly take off from the ground.\n"
+					+ "you look at the facility one last time.");
 			won = true;
 		}
-		else System.out.println("You tried to start the helicopter, but it does not function. Perhaps you're still missing a few pieces");
+		else System.out.println("You tried to start the helicopter, but it does not function. Perhaps you're still missing a few pieces");	
 	}
+
 }
