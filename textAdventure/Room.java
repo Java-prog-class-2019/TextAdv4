@@ -15,18 +15,28 @@ class Room{
 	private String description;  //the description that is displayed when you first enter the room or type "look"
 	private String N,S,W,E,U,D;  //these are exits that point to the HashMap name of other rooms.
 	private boolean dark=false; //is the room dark (so you need a flashlight or else yoou die if you stay here)
+	private boolean lock=false; //checking if a room is locked and can't be accessed
+	private boolean cold=false; //check to see if the room is cold enough to freeze in
 	private boolean visited=false; //has the user visited this room already?
 	ArrayList<String> items = new ArrayList<String>(); //items in this room
 
-	//Maintenance Dark Message
-	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.";
-
+	//Puzzle messages
+	static String darkMsg = "It's pitch black. You can’t see anything. It’s oddly warm down here.\n";
+	static String lockMsg = "The door is locked, looks like you'll need a keycard to get in, so you went back to the hall.\n";
+	static String coldMsg = "It's freezing out here, if you don't leave soon you could freeze to death\n";
+	
 	/******getters and setters *****/
 	String getTitle()  { return title; }
 	String getDesc()  { return description; }
 	boolean hasVisited() { return visited; }
 	void visit()   { visited = true; }
 	boolean getIsDark()  { return this.dark; }
+	boolean getIsLocked() { return this.lock;}
+	boolean getIsCold() { return this.cold; }
+	
+	static String getDarkMsg() {return darkMsg;}
+	static String getLockedMsg() { return lockMsg;}
+	static String getcoldMsg() {return coldMsg;}
 
 	public void setExits(String N, String S, String W, String E, String U, String D) {
 		this.N = N;
@@ -57,21 +67,32 @@ class Room{
 	}
 
 	static void setupRooms(HashMap<String,Room> roomList) {
-
-		Room r = new Room("Airlock","Airlock Descp");
-		r.setExits("","","Hall2","Outside","","");       
+		//Sets up all rooms with their name, description, and connecting rooms
+		// N S W E U D << exit sequence
+		
+		Room r = new Room("Airlock","A small room with large sliding doors on each end a control panel lies one one of the walls between the doors.\n "
+				+ "You notice that one of the doors won’t open without the other being closed.\n" + 
+				"");
+		r.setExits("","","Hall2","Outside","",""); 
+		r.lock = true;
 		roomList.put("Airlock", r);
 
-		r = new Room("Armoury","The walls of the room are covered in shelves and cabinets with various armaments stored within them.\n"
+		r = new Room("Armoury","The walls of the room are covered with shelves and cabinets housing various armaments stored within them.\n"
 				+ "It seems that whoever was here had left in a hurry as rifles, side arms and ammunition are scattered all over the floor.");
 		r.setExits("","Hall1","","","","");
 		roomList.put("Armoury",r);
 
-		r = new Room("Dig Site","Digsite descp");
-		r.setExits("Outside","","","","","");
+		r = new Room("Dig Site","This temporary work site seems to be inside of a dug out cave made from ice.\n "
+				+ "In the center of the cavern lies a plinth made from a smooth, dark stone.\n "
+				+ "On top of the plinth lies a small dagger. Something is engraved in the side of the blade,\n "
+				+ "but it’s in a language you can’t understand. Underneath the dagger you find a note.\n" 
+				+ "On the side, you also notice some research equipment. It seems to be an oil distillation site");
+		r.cold = true;
+		r.setExits("Outside","Lab2","","","","");
 		roomList.put("DigSite", r);
 
-		r = new Room("Hall 1","Hall1 descp");
+		r = new Room("Hall 1","You walk through a well decorated corridor with two doors leading north and east. \nThe hall continues south of where you are. The door behind you suddenly closes with a loud thud. \nThere are signs above the doors but they are very hard to read. Blood hides some of letters, but you can still recognize them. \nThe sign above the east door says \"MedBay\". The sign above the north door says \"Armoury\".\n" + 
+				"");
 		r.setExits("Armoury","Hall2","Lab1","MedBay","","");
 		roomList.put("Hall1",r);
 
@@ -84,6 +105,7 @@ class Room{
 		r = new Room("Helicopter Pad","A large concrete circle rests in the snow with a helicopter sitting on top.\n"
 				+ "The helicopter seems to be functional but you try to turn it on and it doesn’t start up.\n"
 				+"It looks like its out of fuel. Maybe you could escape if you found some.");
+		r.cold = true;
 		r.setExits("","Outside","","","","");  
 		roomList.put("Helipad",r);
 
@@ -93,20 +115,22 @@ class Room{
 				+"A single knife is imbedded halfway into the wall and a strang black liquid seems to be seeping out around");
 		r.setExits("","","","MessHall","","");   
 		roomList.put("Kitchen", r);
-		// N S W E U D << exit sequence
+		
 		r = new Room("Lab 1","A dimly lit room, it feels cold and damp almost like somethings breathing down the back of your neck.\n"
 				+ "Large scratches are carved into the metal walls near the door.\n"
-				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against a wall");
-		r.setExits("Lab2","","","Hall1","","");  
+				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against the north wall");
+		r.setExits("Shrine","","","Hall1","","");  
 		roomList.put("Lab1",r); 
 
 		r = new Room("Lab 2","This laboratory seems to be in pristine condition. The counter tops are clean and neat.\n"
 				+ "However, the operation table in the middle of the room seems to be missing.\n"
 				+ "An outline of dust covers the floor where it use to be. Four bolt holes lie in the corners of the dusty outline.");
-		r.setExits("","Lab1","Shrine","","","");  
+		r.setExits("DigSite","","","","","");  
 		roomList.put("Lab2",r); 
 
-		r = new Room("Living Quarters","Living quarters descp");
+		r = new Room("Living Quarters","Rows of bunks line the far wall of this room. A bathroom door lies just off to the north.\n "
+				+ "The beds are made very neatly, but it still looks like someones been living here, and fairly recently.\n "
+				+ "Lockers head each of the bunks. All of them are locked.");
 		r.setExits("Hall2", "","", "", "","");       
 		roomList.put("LivQuar", r);
 
@@ -115,7 +139,7 @@ class Room{
 				+"You discover that the source of the heat is a large boiler on the west wall, it seems to be operational.\n"
 				+"A small storage shelf lies on the east wall. There is a small hammer laying on top of it.");
 		r.setExits("","","","","Hall2","");
-		r.getIsDark();       
+		r.dark = true;       
 		roomList.put("MaintArea", r);
 
 		r = new Room("Med Bay", "A med bay with cabinets stocked full of different medications.\n"
@@ -133,14 +157,17 @@ class Room{
 		r.setExits("","","Kitchen","Hall2","","");   
 		roomList.put("MessHall", r);
 
-		r = new Room("Outside","Outside descp");
+		r = new Room("Outside","Its cold, very cold. You are surrounded by cliffs of ice capped with snow.\n "
+				+ "You can see a helipad off to the north.\n "
+				+ "Off to your east you can see what seems to be a large cavern carved out from the ice.\n" + "");
+		r.cold = true;
 		r.setExits("Helipad","DigSite","Airlock","","","");  
 		roomList.put("Outside",r);
 
 		r = new Room("Secret Room", "This room was hidden behind a bookshelf. It seems to be some\n"
 				+"sort of altar room lit only by candles. Symbols made from a dark liquid cover the floor.\n"
 				+"The room is too dark to see what the liquid is.");
-		r.setExits("","","","Lab2","","");
+		r.setExits("","Lab1","","","","");
 		roomList.put("Shrine", r);
 
 		/*//Prints all rooms 
