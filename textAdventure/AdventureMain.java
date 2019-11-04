@@ -37,6 +37,7 @@ public class AdventureMain {
 		while (playing) { 
 
 			//Reads user input
+			System.out.println("\nYou have "+ player.health + " health\n");
 			command = getCommand(); 
 			playing = parseCommand(command);
 
@@ -271,7 +272,6 @@ public class AdventureMain {
 					if(food.equals("hammer")) {
 						System.out.println("you have eaten a hammer and died, what did you expect");
 						player.health = 0;
-						
 					} else {
 						if(player.health > (100 - item.foodPoints)) {
 							System.out.println("You're too full to eat");
