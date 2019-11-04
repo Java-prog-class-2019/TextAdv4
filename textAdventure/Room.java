@@ -118,7 +118,7 @@ class Room{
 		
 		r = new Room("Lab 1","A dimly lit room, it feels cold and damp almost like somethings breathing down the back of your neck.\n"
 				+ "Large scratches are carved into the metal walls near the door.\n"
-				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against a wall");
+				+ "Lab equipment lays scattered around the floor and a bookshelf rests awkwardly against the north wall");
 		r.setExits("Shrine","","","Hall1","","");  
 		roomList.put("Lab1",r); 
 

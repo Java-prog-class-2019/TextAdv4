@@ -270,9 +270,13 @@ public class AdventureMain {
 	
 
 	void eatItem(String food) {
+<<<<<<< Updated upstream
 		//Eat command
+=======
+		food = food.toLowerCase();
+>>>>>>> Stashed changes
 		for(Item item: invList) {
-			if(item.itemName.equals(food.toLowerCase())){
+			if(item.itemName.equals(food)){
 				if(item.edible) {
 					if(food.equals("hammer")) {
 						System.out.println("you have eaten a hammer and died, what did you expect");
