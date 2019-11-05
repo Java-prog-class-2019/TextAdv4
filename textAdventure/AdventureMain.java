@@ -131,7 +131,12 @@ public class AdventureMain {
 			}
 			break;
 		case "HELP":
-			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nSearch\nInventory\nExit");
+			System.out.println("Here is a list of commands you can use:\nNorth, South, East, West, Up, Down\nSearch\nInventory\nExit\nEat <Object>\nMove <Object>\nUse <Object>");
+			break;
+		case "LEAVE":
+			System.out.println("You have awoken your dormant powers of inter planar manipulation and successfuly travelled behind the universal curtain\n"
+					+ "You end up on a beach somewhere in what looks like Hawaii. GG I guess?");
+			won = true;
 			break;
 		case "SEARCH":
 			searchRoom();
